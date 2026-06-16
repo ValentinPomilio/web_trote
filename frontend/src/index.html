@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestro Running Challenge</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="app-container">
+        <header>
+            <h1>Nuestro Running Challenge</h1>
+            <div class="header-users">
+                <span class="user-badge badge-vanesa">♀ Vanesa</span>
+                <span class="user-badge badge-valentin">♂ Valentín</span>
+            </div>
+        </header>
+
+        <main id="sec-dashboard" class="section-view active">
+            <div class="vs-bar" id="vs-status">Cargando estado de la competencia...</div>
+
+            <div class="grid-desktop">
+                <div class="card profile-card vanesa">
+                    <div class="profile-header">
+                        <div class="profile-avatar" style="color: var(--vanesa-color);">V</div>
+                        <div class="profile-title">
+                            <h3>Vanesa</h3>
+                            <p id="v-range">Rango: Principiante</p>
+                        </div>
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat-box"><div class="stat-label">Km Totales</div><div class="stat-value" id="v-km">0</div></div>
+                        <div class="stat-box"><div class="stat-label">Min Total</div><div class="stat-value" id="v-min">0</div></div>
+                        <div class="stat-box"><div class="stat-label">Salidas</div><div class="stat-value" id="v-salidas">0</div></div>
+                        <div class="stat-box"><div class="stat-label">Puntos</div><div class="stat-value" id="v-pts">0</div></div>
+                    </div>
+                    <div class="stat-box" style="margin-top:10px;"><div class="stat-label">Última Carrera</div><div class="stat-value" id="v-date">-</div></div>
+                    <div class="progress-container">
+                        <div class="stat-label" id="v-next-range-txt">Próximo rango: 0%</div>
+                        <div class="progress-bar-bg"><div class="progress-bar-fill" id="v-bar" style="background:var(--vanesa-color)"></div></div>
+                    </div>
+                </div>
+
+                <div class="card profile-card valentin">
+                    <div class="profile-header">
+                        <div class="profile-avatar" style="color: var(--valentin-color);">V</div>
+                        <div class="profile-title">
+                            <h3>Valentín</h3>
+                            <p id="v2-range">Rango: Principiante</p>
+                        </div>
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat-box"><div class="stat-label">Km Totales</div><div class="stat-value" id="v2-km">0</div></div>
+                        <div class="stat-box"><div class="stat-label">Min Total</div><div class="stat-value" id="v2-min">0</div></div>
+                        <div class="stat-box"><div class="stat-label">Salidas</div><div class="stat-value" id="v2-salidas">0</div></div>
+                        <div class="stat-box"><div class="stat-label">Puntos</div><div class="stat-value" id="v2-pts">0</div></div>
+                    </div>
+                    <div class="stat-box" style="margin-top:10px;"><div class="stat-label">Última Carrera</div><div class="stat-value" id="v2-date">-</div></div>
+                    <div class="progress-container">
+                        <div class="stat-label" id="v2-next-range-txt">Próximo rango: 0%</div>
+                        <div class="progress-bar-bg"><div class="progress-bar-fill" id="v2-bar" style="background:var(--valentin-color)"></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-desktop">
+                <div class="card">
+                    <h2>Rachas Activas</h2>
+                    <div class="stats-grid">
+                        <div class="stat-box"><div class="stat-label">Racha Vanesa</div><div class="stat-value" id="v-racha">0 sem</div></div>
+                        <div class="stat-box"><div class="stat-label">Récord Vanesa</div><div class="stat-value" id="v-record">0 sem</div></div>
+                        <div class="stat-box"><div class="stat-label">Racha Valentín</div><div class="stat-value" id="v2-racha">0 sem</div></div>
+                        <div class="stat-box"><div class="stat-label">Récord Valentín</div><div class="stat-value" id="v2-record">0 sem</div></div>
+                    </div>
+                    <div id="streak-congrats" style="font-size:0.8rem; color:var(--shared-color); margin-top:10px; font-weight:600; text-align:center;"></div>
+                </div>
+
+                <div class="card">
+                    <h2>Reto de la Semana ✨</h2>
+                    <div class="challenge-box">
+                        <p id="challenge-desc" style="font-size:0.9rem; font-weight:600; margin-bottom:6px;">Cargando reto...</p>
+                        <p style="font-size:0.75rem; color:var(--text-muted);">Recompensa: +20 Pts e Insignia</p>
+                    </div>
+                    <div class="badge-list" id="insignias-list"></div>
+                </div>
+            </div>
+
+            <div class="card full-width-desktop">
+                <h2>Calendario de Actividad</h2>
+                <div class="calendar-grid" id="calendar-element"></div>
+            </div>
+        </main>
+
+        <section id="sec-registro" class="section-view">
+            <div class="card">
+                <h2>Registrar Nueva Salida</h2>
+                <form id="run-form">
+                    <div class="form-group">
+                        <label for="form-runner">Runner</label>
+                        <select class="form-control" id="form-runner" required>
+                            <option value="vanesa">Vanesa</option>
+                            <option value="valentin">Valentín</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="form-date">Fecha</label>
+                        <input type="date" class="form-control" id="form-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="form-km">Kilómetros Recorridos</label>
+                        <input type="number" step="0.01" class="form-control" id="form-km" placeholder="Ej: 5.4" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="form-min">Minutos Corridos</label>
+                        <input type="number" class="form-control" id="form-min" placeholder="Ej: 35" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="form-comment">Comentario (Opcional)</label>
+                        <input type="text" class="form-control" id="form-comment" placeholder="¡Buenas sensaciones!">
+                    </div>
+                    <button type="submit" class="btn">Guardar Registro</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="sec-historial" class="section-view">
+            <div class="card">
+                <h2>Historial de Actividad</h2>
+                <div class="filter-tabs">
+                    <button class="tab-btn active" id="filter-all-btn">Todos</button>
+                    <button class="tab-btn" id="filter-vanesa-btn">Vanesa</button>
+                    <button class="tab-btn" id="filter-valentin-btn">Valentín</button>
+                </div>
+                <div id="history-container"></div>
+            </div>
+        </section>
+
+        <section id="sec-rutina" class="section-view">
+            <div class="card">
+                <h2>Plan de Entrenamiento</h2>
+                <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:16px;" id="current-week-display">Cargando...</p>
+                
+                <div style="margin-bottom:16px; padding:12px; background:#f8fafc; border-radius:8px;">
+                    <span class="stat-label">Progreso de Vanesa esta semana</span>
+                    <div class="progress-bar-bg"><div class="progress-bar-fill" id="v-week-progress" style="background:var(--vanesa-color)"></div></div>
+                </div>
+                <div style="margin-bottom:20px; padding:12px; background:#f8fafc; border-radius:8px;">
+                    <span class="stat-label">Progreso de Valentín esta semana</span>
+                    <div class="progress-bar-bg"><div class="progress-bar-fill" id="v2-week-progress" style="background:var(--valentin-color)"></div></div>
+                </div>
+
+                <hr style="border:0; border-top:1px solid #e2e8f0; margin-bottom:16px;">
+
+                <div style="display:flex; flex-direction:column; gap:12px;">
+                    <div style="padding:10px; border-left:3px solid var(--text-main);">
+                        <strong>Semana 1 y 2</strong> — Meta: 2 horas de trote (Ej: 3x40min o 4x30min)
+                    </div>
+                    <div style="padding:10px; border-left:3px solid var(--text-main);">
+                        <strong>Semana 3 y 4</strong> — Meta: 2 horas y 20 minutos de trote.
+                    </div>
+                    <div style="padding:10px; border-left:3px solid var(--text-main);">
+                        <strong>Semana 5 y 6</strong> — Meta: 2 horas y 40 minutos + últimos 10min rápidos en una salida.
+                    </div>
+                    <div style="padding:10px; border-left:3px solid var(--text-main);">
+                        <strong>Semana 7 y 8</strong> — Meta: 3 horas de trote (Incluir: 10m suave / 20m cómodo / 10m suave).
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="sec-muro" class="section-view">
+            <div class="card">
+                <h2>Muro de Motivación</h2>
+                <div class="wall-input">
+                    <select id="wall-author" class="form-control" style="width:30%">
+                        <option value="Vanesa">Vanesa</option>
+                        <option value="Valentín">Valentín</option>
+                    </select>
+                    <input type="text" id="wall-msg" class="form-control" placeholder="Escribe un mensaje motivador...">
+                    <button class="btn" style="margin:0; width:auto; padding:10px 16px;" id="wall-send-btn">Enviar</button>
+                </div>
+                <div id="wall-container"></div>
+            </div>
+        </section>
+    </div>
+
+    <nav class="bottom-nav">
+        <button class="nav-item active" data-section="sec-dashboard">
+            <svg viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+            Dashboard
+        </button>
+        <button class="nav-item" data-section="sec-registro">
+            <svg viewBox="0 0 24 24"><path d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            Registrar
+        </button>
+        <button class="nav-item" data-section="sec-historial">
+            <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+            Historial
+        </button>
+        <button class="nav-item" data-section="sec-rutina">
+            <svg viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            Rutina
+        </button>
+        <button class="nav-item" data-section="sec-muro">
+            <svg viewBox="0 0 24 24"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+            Muro
+        </button>
+    </nav>
+
+    <script src="app.js"></script>
+</body>
+</html>

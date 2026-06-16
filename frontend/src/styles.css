@@ -1,0 +1,414 @@
+:root {
+    /* Modo Claro por Defecto */
+    --bg-color: #f8fafc;
+    --card-bg: #ffffff;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --vanesa-color: #ec4899;
+    --vanesa-bg: #fdf2f8;
+    --valentin-color: #3b82f6;
+    --valentin-bg: #eff6ff;
+    --shared-color: #10b981;
+    --shared-bg: #ecfdf5;
+    --border-radius: 16px;
+    --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+    --nav-bg: rgba(255, 255, 255, 0.85);
+    --input-bg: #f8fafc;
+    --input-border: #e2e8f0;
+    --calendar-empty: #f1f5f9;
+    --challenge-bg: linear-gradient(135deg, #fef08a 0%, #fef9c3 100%);
+    --challenge-border: #fef08a;
+    --challenge-text: #1e293b;
+}
+
+/* Modo Oscuro Automático */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-color: #0f172a;
+        --card-bg: #1e293b;
+        --text-main: #f1f5f9;
+        --text-muted: #94a3b8;
+        --vanesa-color: #f472b6;
+        --vanesa-bg: #371e2e;
+        --valentin-color: #60a5fa;
+        --valentin-bg: #1e293b;
+        --shared-color: #34d399;
+        --shared-bg: #064e3b;
+        --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+        --nav-bg: rgba(30, 41, 59, 0.85);
+        --input-bg: #0f172a;
+        --input-border: #334155;
+        --calendar-empty: #334155;
+        --challenge-bg: linear-gradient(135deg, #3e3a12 0%, #2e2b10 100%);
+        --challenge-border: #854d0e;
+        --challenge-text: #fef08a;
+    }
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    padding-bottom: 90px;
+    display: flex;
+    justify-content: center;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 480px;
+    padding: 20px 16px;
+}
+
+@media (min-width: 768px) {
+    .app-container {
+        max-width: 720px;
+    }
+    .grid-desktop {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+    }
+    .full-width-desktop {
+        grid-column: span 2;
+    }
+}
+
+/* Encabezado */
+header {
+    text-align: center;
+    margin-bottom: 24px;
+    padding: 10px 0;
+}
+
+header h1 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+}
+
+.header-users {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.user-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+}
+
+.badge-vanesa { background-color: var(--vanesa-bg); color: var(--vanesa-color); }
+.badge-valentin { background-color: var(--valentin-bg); color: var(--valentin-color); }
+
+/* Componentes de Tarjetas */
+.card {
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+h2 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: var(--text-main);
+}
+
+.section-view {
+    display: none;
+}
+
+.section-view.active {
+    display: block;
+}
+
+/* Balance de Competencia */
+.vs-bar {
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    padding: 12px;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+/* Perfiles del Dashboard */
+.profile-card {
+    border-top: 4px solid transparent;
+}
+.profile-card.vanesa { border-top-color: var(--vanesa-color); }
+.profile-card.valentin { border-top-color: var(--valentin-color); }
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.profile-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--calendar-empty);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.profile-title h3 { font-size: 1rem; font-weight: 600; }
+.profile-title p { font-size: 0.75rem; color: var(--text-muted); }
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.stat-box {
+    background: var(--input-bg);
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid var(--input-border);
+}
+
+.stat-label { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+.stat-value { font-size: 0.95rem; font-weight: 600; margin-top: 2px; }
+
+.progress-container {
+    margin-top: 12px;
+}
+.progress-bar-bg {
+    background: var(--calendar-empty);
+    height: 6px;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: 4px;
+}
+.progress-bar-fill {
+    height: 100%;
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+/* Formularios */
+.form-group {
+    margin-bottom: 14px;
+}
+.form-group label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--text-muted);
+}
+.form-control {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--input-border);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    outline: none;
+    background: var(--input-bg);
+    color: var(--text-main);
+}
+.form-control:focus {
+    border-color: var(--text-muted);
+}
+/* Estilo para inputs de fecha nativos en modo oscuro */
+color-scheme: light dark;
+
+.btn {
+    width: 100%;
+    padding: 12px;
+    background: var(--text-main);
+    color: var(--bg-color);
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+/* Historial de Actividad */
+.filter-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+.tab-btn {
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--input-border);
+    background: var(--card-bg);
+    color: var(--text-main);
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+.tab-btn.active {
+    background: var(--text-main);
+    color: var(--bg-color);
+    border-color: var(--text-main);
+}
+
+.history-item {
+    padding: 12px;
+    border-left: 4px solid var(--input-border);
+    background: var(--input-bg);
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 10px;
+    font-size: 0.85rem;
+}
+.history-item.vanesa { border-left-color: var(--vanesa-color); }
+.history-item.valentin { border-left-color: var(--valentin-color); }
+.history-header { display: flex; justify-content: space-between; margin-bottom: 4px; font-weight: 600;}
+.history-comment { font-style: italic; color: var(--text-muted); margin-top: 4px; font-size: 0.8rem;}
+
+/* Calendario */
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+    text-align: center;
+}
+.calendar-day-head { font-size: 0.7rem; font-weight: 600; color: var(--text-muted); }
+.calendar-day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    border-radius: 50%;
+    background: var(--calendar-empty);
+    font-weight: 500;
+    color: var(--text-muted);
+}
+.calendar-day.cal-vanesa { background-color: var(--vanesa-bg); color: var(--vanesa-color); font-weight: 700; }
+.calendar-day.cal-valentin { background-color: var(--valentin-bg); color: var(--valentin-color); font-weight: 700; }
+.calendar-day.cal-shared { background-color: var(--shared-bg); color: var(--shared-color); font-weight: 700; box-shadow: 0 0 0 2px var(--shared-color); }
+
+/* Retos e Insignias */
+.challenge-box {
+    background: var(--challenge-bg);
+    padding: 16px;
+    border-radius: 12px;
+    border: 1px solid var(--challenge-border);
+}
+#challenge-desc {
+    color: var(--challenge-text);
+}
+.badge-list {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+.badge-icon {
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+}
+
+/* Muro */
+.wall-input { display: flex; gap: 8px; margin-bottom: 12px;}
+.msg-card {
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    font-size: 0.85rem;
+}
+.msg-meta { font-size: 0.7rem; color: var(--text-muted); margin-bottom: 2px; font-weight: 600;}
+
+/* Menú Inferior de Navegación */
+nav.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 480px;
+    background: var(--nav-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid var(--input-border);
+    display: flex;
+    justify-content: space-around;
+    padding: 12px 0 calc(12px + env(safe-area-inset-bottom, 0px));
+    z-index: 1000;
+    transition: background-color 0.3s, border-top-color 0.3s;
+}
+
+.nav-item {
+    background: none;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--text-muted);
+    font-size: 0.65rem;
+    font-weight: 500;
+    cursor: pointer;
+    width: 20%;
+}
+
+.nav-item svg {
+    width: 20px;
+    height: 20px;
+    margin-bottom: 4px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+}
+
+.nav-item.active {
+    color: var(--text-main);
+    font-weight: 700;
+}
+
+/* Botón de eliminación en historial */
+.delete-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    padding: 2px 6px;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+    opacity: 0.6;
+}
+
+.delete-btn:hover {
+    background-color: rgba(239, 68, 68, 0.15); /* Rojo suave al pasar el cursor */
+    opacity: 1;
+}
+
+@media (prefers-color-scheme: dark) {
+    .delete-btn:hover {
+        background-color: rgba(248, 113, 113, 0.2);
+    }
+}

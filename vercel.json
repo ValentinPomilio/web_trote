@@ -1,12 +1,26 @@
 {
-  "rewrites": [
+  "builds": [
     {
-      "source": "/carreras/(.*)",
-      "destination": "/backend/src/main.py"
+      "src": "backend/src/main.py",
+      "use": "@vercel/python"
     },
     {
-      "source": "/carreras",
-      "destination": "/backend/src/main.py"
+      "src": "frontend/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/carreras/(.*)",
+      "dest": "backend/src/main.py"
+    },
+    {
+      "src": "/carreras",
+      "dest": "backend/src/main.py"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "frontend/$1"
     }
   ]
 }

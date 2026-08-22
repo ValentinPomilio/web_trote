@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trote App 🏃‍♂️</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen pb-20">
+
+  <!-- Header principal -->
+  <header class="sticky top-0 z-50 bg-slate-900/80 backdrop-blur-md border-b border-slate-800">
+    <div class="max-w-md mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center space-x-2">
+        <span class="text-2xl">⚡</span>
+        <h1 class="text-xl font-extrabold bg-gradient-to-r from-orange-400 to-amber-200 bg-clip-text text-transparent">TroteApp</h1>
+      </div>
+      
+      <button id="btn-sync" class="relative flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-800 text-xs font-semibold hover:bg-slate-700 transition">
+        <span>🔄 Sync</span>
+        <span id="badge-pendientes" class="hidden bg-orange-500 text-slate-900 font-extrabold px-1.5 py-0.5 rounded-full text-[10px]">0</span>
+      </button>
+    </div>
+
+    <nav class="flex border-t border-slate-800 text-sm">
+      <button id="tab-btn-registro" class="flex-1 py-3 text-center border-b-2 border-indigo-500 text-indigo-400 font-semibold transition">
+        📝 Registrar
+      </button>
+      <button id="tab-btn-stats" class="flex-1 py-3 text-center border-b-2 border-transparent text-slate-400 font-semibold hover:text-slate-200 transition">
+        📊 Estadísticas
+      </button>
+    </nav>
+  </header>
+
+  <main class="max-w-md mx-auto p-4">
+
+    <!-- PESTAÑA 1: FORMULARIO DE REGISTRO -->
+    <section id="sec-registro" class="space-y-4">
+      <form id="form-carrera" class="bg-slate-800/80 p-5 rounded-2xl border border-slate-700/50 space-y-4 shadow-xl">
+        <h2 class="text-lg font-bold text-slate-200 flex items-center gap-2">
+          <span>🏃‍♂️</span> Nuevo Entrenamiento
+        </h2>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div class="col-span-2">
+            <label class="block text-xs font-medium text-slate-400 mb-1">📅 Fecha</label>
+            <input type="date" id="fecha" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-indigo-500" />
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-slate-400 mb-1">⏰ Hora Inicio</label>
+            <input type="time" id="hora_inicio" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-indigo-500" />
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-slate-400 mb-1">🏁 Hora Fin</label>
+            <input type="time" id="hora_fin" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-indigo-500" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-medium text-slate-400 mb-1">📏 Distancia (Km)</label>
+          <input type="number" step="0.01" id="distancia_km" placeholder="Ej: 5.25" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-indigo-500" />
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-medium text-slate-400 mb-1">🎯 Tipo</label>
+            <select id="tipo_entrenamiento" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-indigo-500">
+              <option value="Trote suave">🌱 Trote suave</option>
+              <option value="Fondo">🔋 Fondo</option>
+              <option value="Pasadas">🔥 Pasadas</option>
+              <option value="Competencia">🏆 Carrera</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-slate-400 mb-1">🛣️ Terreno</label>
+            <select id="tipo_terreno" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-indigo-500">
+              <option value="Asfalto">🏙️ Asfalto</option>
+              <option value="Pista">🏟️ Pista</option>
+              <option value="Tierra">🌲 Tierra/Trail</option>
+              <option value="Cinta">🏋️ Cinta</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <div class="flex justify-between items-center mb-1">
+            <label class="text-xs font-medium text-slate-400">🔥 Nivel de Esfuerzo (RPE)</label>
+            <span id="esfuerzo-val" class="text-xs font-extrabold text-orange-400 bg-orange-950 px-2 py-0.5 rounded-md">5 / 10</span>
+          </div>
+          <input type="range" id="nivel_esfuerzo" min="1" max="10" value="5" class="w-full accent-orange-500 cursor-pointer" />
+        </div>
+
+        <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-700/50 space-y-2">
+          <label class="flex items-center gap-2 cursor-pointer text-sm font-medium text-slate-300">
+            <input type="checkbox" id="tiene_dolores" class="w-4 h-4 rounded accent-rose-500" />
+            <span>🤕 ¿Tuviste dolores o molestias?</span>
+          </label>
+          <div id="box-zona-dolor" class="hidden">
+            <input type="text" id="zona_dolor" placeholder="¿Dónde te dolió? (ej. Rodilla der.)" class="w-full bg-slate-900 border border-rose-900/50 rounded-lg px-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-rose-500" />
+          </div>
+        </div>
+
+        <button type="submit" class="w-full py-3 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-slate-950 font-extrabold rounded-xl shadow-lg transition active:scale-[0.98]">
+          💾 Guardar Entrenamiento
+        </button>
+      </form>
+    </section>
+
+    <!-- PESTAÑA 2: ESTADÍSTICAS Y GRÁFICOS -->
+    <section id="sec-stats" class="space-y-4 hidden">
+      <div class="grid grid-cols-2 gap-3">
+        <div class="bg-slate-800/80 p-4 rounded-2xl border border-slate-700/50">
+          <span class="text-xs text-slate-400 font-semibold block mb-1">🏁 Distancia Total</span>
+          <span id="kpi-distancia" class="text-2xl font-black text-amber-400">0.0</span> <span class="text-xs text-amber-300">km</span>
+        </div>
+        <div class="bg-slate-800/80 p-4 rounded-2xl border border-slate-700/50">
+          <span class="text-xs text-slate-400 font-semibold block mb-1">⚡ Pace Promedio</span>
+          <span id="kpi-pace" class="text-2xl font-black text-indigo-400">0.0</span> <span class="text-xs text-indigo-300">m/km</span>
+        </div>
+        <div class="bg-slate-800/80 p-4 rounded-2xl border border-slate-700/50">
+          <span class="text-xs text-slate-400 font-semibold block mb-1">🏃‍♂️ Total Sesiones</span>
+          <span id="kpi-sesiones" class="text-2xl font-black text-emerald-400">0</span>
+        </div>
+        <div class="bg-slate-800/80 p-4 rounded-2xl border border-slate-700/50">
+          <span class="text-xs text-slate-400 font-semibold block mb-1">🩹 % con Molestias</span>
+          <span id="kpi-dolores" class="text-2xl font-black text-rose-400">0%</span>
+        </div>
+      </div>
+
+      <div class="bg-slate-800/80 p-4 rounded-2xl border border-slate-700/50 space-y-2">
+        <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider">📈 Evolución de Distancia y Ritmo</h3>
+        <div class="relative h-56">
+          <canvas id="chart-evolucion"></canvas>
+        </div>
+      </div>
+
+      <div class="bg-slate-800/80 p-4 rounded-2xl border border-slate-700/50 space-y-2">
+        <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider">🛣️ Uso de Terrenos</h3>
+        <div class="relative h-48 flex justify-center">
+          <canvas id="chart-terrenos"></canvas>
+        </div>
+      </div>
+
+      <!-- Histórico Reciente -->
+      <div class="bg-slate-800/80 p-4 rounded-2xl border border-slate-700/50 space-y-3">
+        <h3 class="text-sm font-bold text-slate-300 flex justify-between items-center">
+          <span>📜 Histórico Reciente</span>
+          <button id="btn-refresh-stats" class="text-xs text-indigo-400 hover:underline">Actualizar 🔄</button>
+        </h3>
+        <div id="lista-carreras" class="space-y-2 max-h-80 overflow-y-auto pr-1">
+          <p class="text-xs text-slate-500 text-center py-4">No hay datos sincronizados aún.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL DE EDICIÓN DE CARRERA -->
+  <div id="modal-editar" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-slate-800 border border-slate-700 rounded-2xl p-5 max-w-md w-full space-y-4 shadow-2xl">
+      <div class="flex justify-between items-center border-b border-slate-700 pb-2">
+        <h3 class="font-bold text-amber-400">✏️ Editar Entrenamiento</h3>
+        <button id="btn-cerrar-modal" class="text-slate-400 hover:text-slate-100 text-lg">✕</button>
+      </div>
+
+      <form id="form-editar-carrera" class="space-y-3">
+        <input type="hidden" id="edit-id" />
+        
+        <div>
+          <label class="block text-xs text-slate-400 mb-1">📅 Fecha</label>
+          <input type="date" id="edit-fecha" required class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-sm" />
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block text-xs text-slate-400 mb-1">📏 Distancia (Km)</label>
+            <input type="number" step="0.01" id="edit-distancia" required class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-sm" />
+          </div>
+          <div>
+            <label class="block text-xs text-slate-400 mb-1">⏱️ Duración (Min)</label>
+            <input type="number" id="edit-duracion" required class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-sm" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block text-xs text-slate-400 mb-1">🎯 Tipo</label>
+            <select id="edit-tipo-entrenamiento" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-sm">
+              <option value="Trote suave">🌱 Trote suave</option>
+              <option value="Fondo">🔋 Fondo</option>
+              <option value="Pasadas">🔥 Pasadas</option>
+              <option value="Competencia">🏆 Carrera</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs text-slate-400 mb-1">🛣️ Terreno</label>
+            <select id="edit-tipo-terreno" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-sm">
+              <option value="Asfalto">🏙️ Asfalto</option>
+              <option value="Pista">🏟️ Pista</option>
+              <option value="Tierra">🌲 Tierra/Trail</option>
+              <option value="Cinta">🏋️ Cinta</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="flex gap-2 pt-2">
+          <button type="button" id="btn-cancelar-modal" class="flex-1 py-2 bg-slate-700 hover:bg-slate-600 rounded-xl text-xs font-bold transition">Cancelar</button>
+          <button type="submit" class="flex-1 py-2 bg-amber-500 hover:bg-amber-600 text-slate-950 rounded-xl text-xs font-bold transition">Guardar Cambios</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

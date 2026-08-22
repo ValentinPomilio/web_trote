@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8000/carreras";
+const API_URL = "/carreras";
 
 export async function sincronizarConServidor(pendientes) {
   const res = await fetch(`${API_URL}/sincronizar`, {

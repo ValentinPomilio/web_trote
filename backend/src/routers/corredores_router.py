@@ -3,10 +3,9 @@ from sqlalchemy.orm import Session
 from sqlalchemy import func
 from typing import List
 
-# Rutas de importación corregidas
-from backend.src.database import get_db
-from backend.src.models.corredores_models import CarreraModel
-from backend.src.schemas.corredores_schemas import CarreraCreate, CarreraResponse, SincronizarBatch, CarreraUpdate
+from database import get_db
+from models.corredores_models import CarreraModel
+from schemas.corredores_schemas import CarreraCreate, CarreraResponse, SincronizarBatch, CarreraUpdate
 
 router = APIRouter(prefix="/carreras", tags=["Carreras"])
 

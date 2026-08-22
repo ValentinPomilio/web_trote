@@ -1,4 +1,4 @@
-const API_URL = "/carreras";
+const API_URL = "http://127.0.0.1:8000/carreras";
 
 async function comprobarRespuesta(res, mensaje) {
   if (res.ok) return;

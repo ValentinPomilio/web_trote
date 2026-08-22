@@ -93,7 +93,8 @@ async function manejarSincronizacion() {
     alert('🚀 ¡Sincronización exitosa!');
     cargarEstadisticasUI();
   } catch (err) {
-    alert('⚠️ No se pudo sincronizar. Verifica el servidor FastAPI.');
+    console.error('Error de sincronización:', err);
+    alert(`⚠️ No se pudo sincronizar. ${err.message}`);
   }
 }
 

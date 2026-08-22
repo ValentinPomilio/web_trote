@@ -1,5 +1,19 @@
 const API_URL = "/carreras";
 
+async function comprobarRespuesta(res, mensaje) {
+  if (res.ok) return;
+
+  let detalle = '';
+  try {
+    const cuerpo = await res.json();
+    detalle = cuerpo.detail || cuerpo.message || '';
+  } catch {
+    // La respuesta puede no ser JSON cuando Vercel falla antes de ejecutar FastAPI.
+  }
+
+  throw new Error(detalle ? `${mensaje}: ${detalle}` : `${mensaje} (${res.status})`);
+}
+
 export async function sincronizarConServidor(pendientes) {
   const res = await fetch(`${API_URL}/sincronizar`, {
     method: 'POST',
@@ -7,13 +21,13 @@ export async function sincronizarConServidor(pendientes) {
     body: JSON.stringify({ carreras: pendientes })
   });
 
-  if (!res.ok) throw new Error('Error en el servidor');
+  await comprobarRespuesta(res, 'Error en el servidor');
   return await res.json();
 }
 
 export async function obtenerEstadisticas() {
   const res = await fetch(`${API_URL}/estadisticas`);
-  if (!res.ok) throw new Error('No se pudieron obtener las estadísticas');
+  await comprobarRespuesta(res, 'No se pudieron obtener las estadísticas');
   return await res.json();
 }
 
@@ -21,7 +35,7 @@ export async function eliminarCarrera(id) {
   const res = await fetch(`${API_URL}/${id}`, {
     method: 'DELETE'
   });
-  if (!res.ok) throw new Error('Error al eliminar la carrera');
+  await comprobarRespuesta(res, 'Error al eliminar la carrera');
   return await res.json();
 }
 
@@ -31,6 +45,6 @@ export async function actualizarCarrera(id, datosActualizados) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(datosActualizados)
   });
-  if (!res.ok) throw new Error('Error al actualizar la carrera');
+  await comprobarRespuesta(res, 'Error al actualizar la carrera');
   return await res.json();
 }

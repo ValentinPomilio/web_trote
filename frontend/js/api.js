@@ -1,4 +1,5 @@
-const API_URL = "http://127.0.0.1:8000/carreras";
+const API_ORIGIN = window.TROTE_API_URL || "http://127.0.0.1:8000";
+const API_URL = `${API_ORIGIN.replace(/\/$/, '')}/carreras`;
 
 async function comprobarRespuesta(res, mensaje) {
   if (res.ok) return;

@@ -1,9 +1,11 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from database import engine, Base
-from routers.corredores_router import router as router_carreras
 
-# Crea las tablas en la base de datos local (trote.db) al iniciar
+# Ruta corregida para el entorno Serverless de Vercel
+from backend.src.database import engine, Base
+from backend.src.routers.corredores_router import router as router_carreras
+
+# Crea las tablas en Neon automáticamente
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
@@ -12,7 +14,6 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# Habilita CORS para permitir peticiones desde tu celular o interfaz web local
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -21,5 +22,4 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Registra los endpoints de carreras
 app.include_router(router_carreras)
